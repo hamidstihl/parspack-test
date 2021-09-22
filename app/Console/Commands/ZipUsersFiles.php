@@ -53,18 +53,33 @@ class ZipUsersFiles extends Command
                 return 1;
             }
             $response = $this->controller->Zip_directory($username);
-            echo $response['data']."\n".$response['message']."\n";
+            echo $response['message']."\n";
+            if($response['success'])
+                echo $response['data']."\n";
             return $response['success'];
         }
         //برای تمام کاربران فایل زیپ را ایجاد میکنیم
         else
         {
             $usernames=User::query()->pluck('username')->toArray();
+            $success="";
+            $success_count=0;
+            $failed_count=0;
             foreach ($usernames as $username)
             {
                 $response = $this->controller->Zip_directory($username);
+                if($response['success'])
+                {
+                    $success.=$response['data']."\n";
+                    $success_count++;
+                }
+                else
+                {
+                    $failed_count++;
+                }
             }
-            echo "فایل های zip ایجاد شد"."\n";
+            echo "ایجاد ".$failed_count." فایل zip با شکست مواجه شد"."\n"."ایجاد ".$success_count.
+                " فایل zip با موفقیت انجام شد"."\n".$success."\n";
             return 0;
         }
     }
