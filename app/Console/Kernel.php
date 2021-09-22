@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('user:zip')->daily()->at('20:35');    //ساعت 00:30 بامداد//ساعت 2 شب
+        $schedule->command('user:zip')->daily()->at('02:00');    //ساعت 2 شب
     }
 
     /**

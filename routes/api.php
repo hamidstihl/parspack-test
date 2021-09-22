@@ -23,7 +23,8 @@ use \App\Http\Controllers\API\UtilController;
 Route::get('register-user-test/{count}',[TestController::class,'RegisterUserTest']);
 Route::get('create-directory-test/{count}',[TestController::class,'CreateDirectoryTest']);
 Route::get('create-file-test/{count}',[TestController::class,'CreateFileTest']);
-Route::get('test/{username}',[UtilController::class,'Zip_directory']);
+Route::get('test',function (){
+    return \Carbon\Carbon::now();});
 //end test
 
 
