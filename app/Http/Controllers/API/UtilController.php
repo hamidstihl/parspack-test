@@ -25,7 +25,7 @@ class UtilController extends Controller
         }
         else
         {
-            $command="zip -r ".Storage::disk('parspack')->get($username)."/".date('Y-m-d').".zip ".Storage::disk('parspack')->get($username);
+            $command="zip -r ".Storage::disk('parspack')->path($username)."/".date('Y-m-d').".zip ".Storage::disk('parspack')->path($username);
             exec($command, $process_result,$status);
             //مقدار نتیجه دستور به صورت آرایه ای از خطوط خروجی است
             //تبدیل آریه به رشته برای نمایش
@@ -46,7 +46,8 @@ class UtilController extends Controller
                 $response = [
                     'success' => false,
                     'data' => $result_string,
-                    'message' => 'ایجاد فایل zip با خطل مواجه شد',
+                    'data2' => $command,
+                    'message' => 'ایجاد فایل zip با خطا مواجه شد',
                 ];
             }
             else
