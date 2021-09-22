@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ZipUsersFiles;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        ZipUsersFiles::class
     ];
 
     /**
@@ -24,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('invoice:sendMessage')->daily()->at('21:00');    //ساعت 00:30 بامداد//ساعت 2 شب
+        $schedule->command('user:zip')->daily()->at('20:35');    //ساعت 00:30 بامداد//ساعت 2 شب
     }
 
     /**
