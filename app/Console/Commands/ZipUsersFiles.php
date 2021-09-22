@@ -49,12 +49,11 @@ class ZipUsersFiles extends Command
         {
             if(!User::query()->where('username',$username)->exists())
             {
-                echo 'کاربر یافت نشد';
+                echo 'کاربر یافت نشد'."\n";
                 return 1;
             }
             $response = $this->controller->Zip_directory($username);
-            print_r($response['data']);
-            echo "\n".$response['message'];
+            echo $response['data']."\n".$response['message']."\n";
             return $response['success'];
         }
         //برای تمام کاربران فایل زیپ را ایجاد میکنیم
@@ -65,7 +64,7 @@ class ZipUsersFiles extends Command
             {
                 $response = $this->controller->Zip_directory($username);
             }
-            echo "فایل های zip ایجاد شد";
+            echo "فایل های zip ایجاد شد"."\n";
             return 0;
         }
     }

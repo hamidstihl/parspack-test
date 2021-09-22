@@ -27,12 +27,25 @@ class UtilController extends Controller
         {
             $command="zip -r ".Storage::disk('parspack')->get($username)."/".date('Y-m-d').".zip ".Storage::disk('parspack')->get($username);
             exec($command, $process_result,$status);
+            //مقدار نتیجه دستور به صورت آرایه ای از خطوط خروجی است
+            //تبدیل آریه به رشته برای نمایش
+            $result_string="";
+            foreach ($process_result as $line)
+            {
+                //حذف فضای خالی
+                $line=trim($line);
+                //اگر چیزی در این خط نوشته شده بود
+                if($line)
+                {
+                    $result_string.=$line."\n";
+                }
+            }
             //عملیات ناموفق
             if($status)
             {
                 $response = [
                     'success' => false,
-                    'data' => $process_result,
+                    'data' => $result_string,
                     'message' => 'ایجاد فایل zip با خطل مواجه شد',
                 ];
             }
@@ -40,7 +53,7 @@ class UtilController extends Controller
             {
                 $response = [
                     'success' => true,
-                    'data' => $process_result,
+                    'data' => $result_string,
                     'message' => 'فایل zip ایجاد شد',
                 ];
             }
