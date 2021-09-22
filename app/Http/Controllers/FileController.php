@@ -15,16 +15,22 @@ class FileController extends Controller
     {
         $this->middleware('auth:sanctum');
         $this->storageObg=$storageObg;
-        $this->middleware(function ($request, $next){
+        if(Auth::check())
+        {
             $this->storageObg->Set_root_directory(Auth::user()->username);
-            return $next($request);
-        });
+        }
+        else {
+            $this->middleware(function ($request, $next) {
+                $this->storageObg->Set_root_directory(Auth::user()->username);
+                return $next($request);
+            });
+        }
     }
 
     public function Create_directory(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255|regex:/(^[a-zA-Z\d]+$)/u|min:3',
+            'name' => 'required|string|max:255|regex:/(^[a-zA-Z_\d]+$)/u|min:3',
         ]);
         if ($validator->fails()) {
             $response = [
@@ -40,7 +46,7 @@ class FileController extends Controller
     public function Create_file(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255|regex:/(^[a-zA-Z\d]+$)/u|min:3',
+            'name' => 'required|string|max:255|regex:/(^[a-zA-Z_\d]+$)/u|min:3',
         ]);
         if ($validator->fails()) {
             $response = [
@@ -63,9 +69,41 @@ class FileController extends Controller
         return $this->Format_response($this->storageObg->Get_files());
     }
 
+    public function Delete_directories(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255|regex:/(^[a-zA-Z_\d]+$)/u|min:3',
+        ]);
+        if ($validator->fails()) {
+            $response = [
+                'success' => false,
+                'data' => $validator->errors(),
+                'message' => 'دادهای ورودی نامعتبر است'
+            ];
+            return $this->Format_response($response);
+        }
+        return $this->Format_response($this->storageObg->Delete_directories($request['name']));
+    }
+
+    public function Delete_files(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255|regex:/(^[a-zA-Z_\d]+$)/u|min:3',
+        ]);
+        if ($validator->fails()) {
+            $response = [
+                'success' => false,
+                'data' => $validator->errors(),
+                'message' => 'دادهای ورودی نامعتبر است'
+            ];
+            return $this->Format_response($response);
+        }
+        return $this->Format_response($this->storageObg->Delete_files($request['name']));
+    }
+
     private function Format_response($response){
         if($response['success'])
-            return $response;
+            return response($response);
         return response($response,400);
     }
 }

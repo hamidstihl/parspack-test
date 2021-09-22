@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\API\TokenAuthController;
 use \App\Http\Controllers\FileController;
+use \App\Http\Controllers\TestController;
 use \App\Http\Controllers\API\UtilController;
 
 /*
@@ -16,6 +17,16 @@ use \App\Http\Controllers\API\UtilController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+
+//start test
+Route::get('register-user-test/{count}',[TestController::class,'RegisterUserTest']);
+Route::get('create-directory-test/{count}',[TestController::class,'CreateDirectoryTest']);
+Route::get('create-file-test/{count}',[TestController::class,'CreateFileTest']);
+Route::get('test/{username}',[UtilController::class,'Zip_directory']);
+//end test
+
+
 
 Route::get('server-process',[UtilController::class,'Get_server_process']);
 
@@ -40,6 +51,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('directory',[FileController::class,'Get_directories']);
 
     Route::get('file',[FileController::class,'Get_files']);
+
+    Route::delete('directory',[FileController::class,'Delete_directories']);
+
+    Route::delete('file',[FileController::class,'Delete_files']);
 
     //////////////////////////
 

@@ -14,5 +14,9 @@ interface StorageManagement
 
     public function Get_files();
 
+    public function Delete_directories($name);
+
+    public function Delete_files($name);
+
     public function Set_root_directory($username);
 }

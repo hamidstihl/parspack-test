@@ -82,4 +82,71 @@ class DiskStorage implements StorageManagement
         ];
         return $response;
     }
+
+    public function Delete_directories($name)
+    {
+        $path=$this->userDirectory.'/'.$name;
+        if(!Storage::disk($this->diskName)->exists($path)) {
+            $response=[
+                'success' => false,
+                'data' => '',
+                'message' => 'پوشه ای با این نام وجود ندارد',
+            ];
+        }
+        else
+        {
+            $deleted=Storage::disk($this->diskName)->deleteDirectory($path);
+            if($deleted)
+            {
+                $response = [
+                    'success' => true,
+                    'data' => '',
+                    'message' => 'پوشه حذف شد',
+                ];
+            }
+            else
+            {
+                $response = [
+                    'success' => false,
+                    'data' => '',
+                    'message' => 'مشکلی در فرایند حذف به وجود آمد',
+                ];
+            }
+        }
+        return $response;
+    }
+
+    public function Delete_files($name)
+    {
+        $path=$this->userDirectory.'/'.$name;
+        if(!Storage::disk($this->diskName)->exists($path)) {
+            $response=[
+                'success' => false,
+                'data' => '',
+                'message' => 'فایلی با این نام وجود ندارد',
+            ];
+        }
+        else
+        {
+            $deleted=Storage::disk($this->diskName)->delete($path);
+            if($deleted)
+            {
+                $response = [
+                    'success' => true,
+                    'data' => '',
+                    'message' => 'فایل حذف شد',
+                ];
+            }
+            else
+            {
+                $response = [
+                    'success' => false,
+                    'data' => '',
+                    'message' => 'مشکلی در فرایند حذف به وجود آمد',
+                ];
+            }
+        }
+        return $response;
+    }
+
 }

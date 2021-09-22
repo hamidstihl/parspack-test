@@ -47,7 +47,7 @@ class TokenAuthController extends Controller
                 'data' => $token,
                 'message' => 'شما با موفقیت وارد شدید'
             ];
-            return $response;
+            return response($response);
         }
     }
 
@@ -59,13 +59,13 @@ class TokenAuthController extends Controller
             'data' => '',
             'message' => 'شما از سیستم خارج شدید'
         ];
-        return $response;
+        return response($response);
     }
 
     public function Register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => ['required', 'string', 'min:4', 'regex:/(^[a-zA-Z\d]+$)/u', 'max:255'],
+            'username' => ['required', 'string', 'min:4', 'regex:/(^[a-zA-Z_\d]+$)/u', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
         if ($validator->fails()) {              //  اگر صحیح نبود
@@ -95,6 +95,6 @@ class TokenAuthController extends Controller
             'data' => $token,
             'message' => 'ثبت نام انجام شد',
         ];
-        return $response;
+        return response($response);
     }
 }

@@ -41,7 +41,9 @@ class UserObserver
      */
     public function deleted(User $user)
     {
-        //
+        if(Storage::disk($this->diskName)->exists($user->username)) {
+            Storage::disk($this->diskName)->deleteDirectory($user->username);
+        }
     }
 
     /**
