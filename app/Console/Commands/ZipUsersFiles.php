@@ -45,7 +45,6 @@ class ZipUsersFiles extends Command
         //اگر نام کاربری وجود نداشت برای همه کاربران فایل zip ایجاد میشود
         //اگر نام کاربری وجود داشت فقط برای همین کاربر
         $username = $this->argument('username');
-        echo $username."\n";
         if($username)
         {
             if(!User::query()->where('username',$username)->exists())
@@ -54,7 +53,8 @@ class ZipUsersFiles extends Command
                 return 1;
             }
             $response = $this->controller->Zip_directory($username);
-            echo $response['data'];
+            print_r($response['data']);
+            echo "\n".$response['message'];
             return $response['success'];
         }
         //برای تمام کاربران فایل زیپ را ایجاد میکنیم
