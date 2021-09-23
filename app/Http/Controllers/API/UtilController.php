@@ -27,18 +27,14 @@ class UtilController extends Controller
         {
             $command1="cd ".Storage::disk('parspack')->path('');
             $command2="zip -r ".$username."/".date('Y-m-d').".zip ".$username.'/';
-            //exec($command1);
             exec($command1.";".$command2, $process_result,$status);
-            $err="";
-            foreach ($process_result as $line)
-                $err.=$line."\n";
             //عملیات ناموفق
             if($status)
             {
                 $response = [
                     'success' => false,
                     'data' => $process_result,
-                    'message' => $command1.";".$command2."\n".$err,
+                    'message' => 'عملیات ایجاد فایل zip با شکست مواجه شد',
                 ];
             }
             else
