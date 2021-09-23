@@ -25,17 +25,20 @@ class UtilController extends Controller
         }
         else
         {
-            $command1="cd ".Storage::disk('parspack')->path('/');
+            $command1="cd ".Storage::disk('parspack')->path('');
             $command2="zip -r ".$username."/".date('Y-m-d').".zip ".$username.'/';
             exec($command1);
             exec($command2, $process_result,$status);
+            $err="";
+            foreach ($process_result as $line)
+                $err.=$line."\n";
             //عملیات ناموفق
             if($status)
             {
                 $response = [
                     'success' => false,
                     'data' => $process_result,
-                    'message' => 'ایجاد فایل zip با خطا مواجه شد',
+                    'message' => $command1."\n".$command2."\n".$err,
                 ];
             }
             else
