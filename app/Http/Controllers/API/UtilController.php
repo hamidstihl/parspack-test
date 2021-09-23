@@ -25,8 +25,10 @@ class UtilController extends Controller
         }
         else
         {
-            $command="zip -r ".Storage::disk('parspack')->path($username)."/".date('Y-m-d').".zip ".Storage::disk('parspack')->path($username);
-            exec($command, $process_result,$status);
+            $command1="cd ".Storage::disk('parspack')->path('/');
+            $command2="zip -r ".$username."/".date('Y-m-d').".zip ".$username.'/';
+            exec($command1);
+            exec($command2, $process_result,$status);
             //عملیات ناموفق
             if($status)
             {
