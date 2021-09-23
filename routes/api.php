@@ -34,6 +34,10 @@ Route::get('server-process',[UtilController::class,'Get_server_process']);
 
 Route::group(['middleware' => ['guest']], function () {
 
+    Route::get('/login', function (){
+        return response()->json(['error'=>'UnAuthenticated'],401);
+    })->name('UnAuthenticated');
+
     Route::post('/login', [TokenAuthController::class,'Login']);
 
     Route::post('/register', [TokenAuthController::class,'Register']);
