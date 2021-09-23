@@ -27,8 +27,8 @@ class UtilController extends Controller
         {
             $command1="cd ".Storage::disk('parspack')->path('');
             $command2="zip -r ".$username."/".date('Y-m-d').".zip ".$username.'/';
-            exec($command1);
-            exec($command2, $process_result,$status);
+            //exec($command1);
+            exec($command1.";".$command2, $process_result,$status);
             $err="";
             foreach ($process_result as $line)
                 $err.=$line."\n";
@@ -38,7 +38,7 @@ class UtilController extends Controller
                 $response = [
                     'success' => false,
                     'data' => $process_result,
-                    'message' => $command1."\n".$command2."\n".$err,
+                    'message' => $command1.";".$command2."\n".$err,
                 ];
             }
             else
